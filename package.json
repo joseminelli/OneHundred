@@ -9,7 +9,8 @@
     "lint:fix": "pnpm run lint:js -- --fix && pnpm run lint:style -- --fix",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore src",
     "lint:style": "stylelint **/*.{vue,css} --ignore-path .gitignore",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.56.1",
