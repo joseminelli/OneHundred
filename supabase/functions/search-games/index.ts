@@ -30,17 +30,12 @@ serve(async (req) => {
       'Content-Type': 'text/plain',
       'Accept': 'application/json',
     }
-
-    // 2. Cria as duas requisições que serão feitas em paralelo.
-
-    // Requisição para obter a CONTAGEM TOTAL de resultados
     const countPromise = fetch('https://api.igdb.com/v4/games/count', {
       method: 'POST',
       headers,
       body: `search "${searchTerm}"; where category = (0, 8, 9);`,
     })
 
-    // Requisição para obter os DADOS DA PÁGINA ATUAL
     const dataPromise = fetch('https://api.igdb.com/v4/games', {
       method: 'POST',
       headers,
