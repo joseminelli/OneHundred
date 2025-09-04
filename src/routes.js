@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Index from '@/pages/index.vue';
 import NotFound from '@/pages/not-found.vue';
-import GameDetailsPage from '@/pages/game/GameDetailsPage.vue';
+import GameDetailsPage from '@/pages/GameDetailsPage.vue';
 const routes = [
   {
     path: '/',
