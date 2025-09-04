@@ -1,8 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Index from '@/pages/index.vue';
 import NotFound from '@/pages/not-found.vue';
-
-// 1. As definições das suas rotas (as "peças")
+import GameDetailsPage from '@/pages/game/GameDetailsPage.vue';
 const routes = [
   {
     path: '/',
@@ -12,7 +11,7 @@ const routes = [
   {
     path: '/game/:id',
     name: 'GameDetails',
-    component: () => import('@/pages/game/[id].vue'),
+    component: GameDetailsPage,
   },
   {
     path: '/:path(.*)',
@@ -20,11 +19,27 @@ const routes = [
   },
 ];
 
-// 2. A construção do roteador (o "motor")
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.BASE_URL),
-  routes, // Usando o array de rotas definido acima
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes,
 });
 
-// 3. A exportação do roteador pronto
+router.onError((error, to) => {
+  if (/Failed to fetch dynamically imported module/.test(error.message)) {
+
+    if (!sessionStorage.getItem('reloadAttempted')) {
+      sessionStorage.setItem('reloadAttempted', 'true');
+      window.location.href = to.fullPath;
+    } else {
+      sessionStorage.removeItem('reloadAttempted');
+      console.error("Falha ao carregar o módulo mesmo após o reload.", error);
+    }
+  }
+});
+
+router.isReady().then(() => {
+  sessionStorage.removeItem('reloadAttempted');
+});
+
+
 export default router;
